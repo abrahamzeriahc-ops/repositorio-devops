@@ -1,8 +1,12 @@
-name: Mi Pipeline CI/CD Corregido
+name: Mi Pipeline CI/CD Final
 
 on:
   push:
     branches: [ "main" ]
+
+# Esto silencia la advertencia de Node.js que te aparece en amarillo
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-and-test:
@@ -19,9 +23,10 @@ jobs:
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          # Quitamos el "app/" porque el archivo está en la raíz
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Build Docker Image
         run: |
-          # Usamos -f para decirle exactamente cómo se llama tu archivo (Dockerfile)
-          docker build -t mi-app-web -f Dockerfile .
+          # Usamos -f DockerFile porque así se llama tu archivo en la captura
+          docker build -t mi-app-web -f DockerFile .
