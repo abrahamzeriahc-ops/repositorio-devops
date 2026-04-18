@@ -1,0 +1,29 @@
+name: Mi Pipeline CI/CD Simulado
+
+on:
+  push:
+    branches: [ main ] # Se activa al hacer 'push'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Fase de Origen (GitHub)
+      uses: actions/checkout@v3
+
+    - name: Fase de Construcción (AWS CodeBuild Simulado)
+      run: |
+        docker build -t mi-app-devops ./app
+        echo "Imagen construida exitosamente"
+
+    - name: Fase de Despliegue (AWS CodeDeploy Simulado)
+      run: |
+        docker compose up -d
+        echo "Aplicación desplegada localmente en el contenedor de pruebas"
+
+    - name: Validación y Monitoreo (CloudWatch Simulado)
+      run: |
+        sleep 5
+        curl http://localhost:5000
+        echo "Validación exitosa: La app responde correctamente"
