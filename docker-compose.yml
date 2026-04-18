@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # Tu app Flask
   web:
     build: ./app
     ports:
@@ -11,14 +10,15 @@ services:
       - AWS_SECRET_ACCESS_KEY=test
       - AWS_DEFAULT_REGION=us-east-1
 
-  # El simulador de AWS
   localstack:
     container_name: localstack_main
-    image: localstack/localstack
+    image: localstack/localstack:latest
     ports:
       - "4566:4566"
     environment:
+      - LOCALSTACK_AUTH_TOKEN=ls-pOfiHoPE-LiCi-9530-5849-xINuNudo1597
       - SERVICES=s3,codepipeline,codebuild,codedeploy
+      - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
