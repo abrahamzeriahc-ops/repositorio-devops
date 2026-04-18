@@ -16,7 +16,7 @@ services:
     ports:
       - "4566:4566"
     environment:
-      - LOCALSTACK_AUTH_TOKEN=ls-pOfiHoPE-LiCi-9530-5849-xINuNudo1597
+      - LOCALSTACK_AUTH_TOKEN=ls-YebaVIfE-LUvA-Cixa-DuZU-rAHa4119a786
       - SERVICES=s3,codepipeline,codebuild,codedeploy
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock

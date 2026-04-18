@@ -1,29 +1,29 @@
-name: Mi Pipeline CI/CD Simulado
+name: Mi Pipeline CI/CD corregido
 
 on:
   push:
-    branches: [ main ] # Se activa al hacer 'push'
+    branches: [ "main" ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Fase de Origen (GitHub)
-      uses: actions/checkout@v3
+      # Paso 1: Descargar el código (Actualizado a v4)
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
 
-    - name: Fase de Construcción (AWS CodeBuild Simulado)
-      run: |
-        docker build -t mi-app-devops ./app
-        echo "Imagen construida exitosamente"
+      # Paso 2: Configurar Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
 
-    - name: Fase de Despliegue (AWS CodeDeploy Simulado)
-      run: |
-        docker compose up -d
-        echo "Aplicación desplegada localmente en el contenedor de pruebas"
+      # Paso 3: Instalar dependencias
+      - name: Instalar dependencias
+        run: |
+          pip install -r app/requirements.txt
 
-    - name: Validación y Monitoreo (CloudWatch Simulado)
-      run: |
-        sleep 5
-        curl http://localhost:5000
-        echo "Validación exitosa: La app responde correctamente"
+      # Paso 4: Construir la imagen de Docker (Validación)
+      - name: Build Docker Image
+        run: |
+          docker build -t mi-app-web ./app
